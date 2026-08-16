@@ -1,0 +1,11 @@
+# Appoyo Mutuo — config mínima Supabase CLI (opcional)
+project_id = "appoyomutuo"
+
+[api]
+enabled = true
+
+[db]
+major_version = 15
+
+[functions.geocode-location]
+verify_jwt = true

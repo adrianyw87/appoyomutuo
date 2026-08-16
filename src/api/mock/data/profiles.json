@@ -1,0 +1,72 @@
+[
+  {
+    "id": "profile-appoyo",
+    "full_name": "Appoyo Mutuo",
+    "bio": "Cuenta oficial con proyectos semilla en Madrid para arrancar la comunidad.",
+    "avatar_url": "",
+    "neighborhood": "Madrid",
+    "areas_interest": ["subsistencia", "vivienda", "trabajo", "cuidados", "educacion", "salud", "ocio", "comunidad"],
+    "skills": "Facilitación y ejemplos",
+    "what_i_offer": "Proyectos semilla para inspirar",
+    "what_i_seek": "Que la gente se sume y lance los suyos",
+    "created_by_id": "user-appoyo",
+    "created_by": "appoyomutuo@gmail.com",
+    "created_date": "2026-07-20T10:00:00.000Z"
+  },
+  {
+    "id": "profile-ada",
+    "full_name": "Ada Demo",
+    "bio": "Me interesa tejer redes locales de cuidado y alimentación en Madrid.",
+    "avatar_url": "",
+    "neighborhood": "Lavapiés",
+    "areas_interest": ["subsistencia", "cuidados", "comunidad"],
+    "skills": "Organización de grupos, cocina colectiva",
+    "what_i_offer": "Tiempo los fines de semana y un local pequeño",
+    "what_i_seek": "Gente con ganas de poner en marcha proyectos reales",
+    "created_by_id": "user-ada",
+    "created_by": "ada@appoyomutuo.local",
+    "created_date": "2026-07-20T10:00:00.000Z"
+  },
+  {
+    "id": "profile-javier",
+    "full_name": "Javier Rodríguez",
+    "bio": "Arquitecto técnico. Me muevo por vivienda cooperativa y espacios compartidos.",
+    "avatar_url": "",
+    "neighborhood": "Malasaña",
+    "areas_interest": ["vivienda", "comunidad", "trabajo"],
+    "skills": "Obra, presupuestos, mediación",
+    "what_i_offer": "Conocimiento técnico y contacto con oficios",
+    "what_i_seek": "Personas para cohabitar o rehabilitar espacios",
+    "created_by_id": "user-javier",
+    "created_by": "javier@appoyomutuo.local",
+    "created_date": "2026-07-18T09:00:00.000Z"
+  },
+  {
+    "id": "profile-maria",
+    "full_name": "María Soler",
+    "bio": "Educadora. Quiero alternativas de ocio y aprendizaje fuera del mercado.",
+    "avatar_url": "",
+    "neighborhood": "Vallecas",
+    "areas_interest": ["educacion", "ocio", "cuidados"],
+    "skills": "Dinámicas de grupo, pedagogía",
+    "what_i_offer": "Talleres y acompañamiento",
+    "what_i_seek": "Espacio y familias interesadas",
+    "created_by_id": "user-maria",
+    "created_by": "maria@appoyomutuo.local",
+    "created_date": "2026-07-15T12:00:00.000Z"
+  },
+  {
+    "id": "profile-luis",
+    "full_name": "Luis Peña",
+    "bio": "Ciclista urbano. Apuesto por movilidad y salud comunitaria.",
+    "avatar_url": "",
+    "neighborhood": "Chamberí",
+    "areas_interest": ["salud", "comunidad", "trabajo"],
+    "skills": "Mecánica de bici, primeros auxilios",
+    "what_i_offer": "Taller de reparación y rutas",
+    "what_i_seek": "Locales y gente constante",
+    "created_by_id": "user-luis",
+    "created_by": "luis@appoyomutuo.local",
+    "created_date": "2026-07-10T08:30:00.000Z"
+  }
+]

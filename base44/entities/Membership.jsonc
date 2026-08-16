@@ -1,0 +1,17 @@
+{
+  "name": "Membership",
+  "type": "object",
+  "properties": {
+    "project_id": {
+      "type": "string",
+      "title": "Proyecto"
+    },
+    "contribution_note": {
+      "type": "string",
+      "title": "Qu\u00e9 aporto"
+    }
+  },
+  "required": [
+    "project_id"
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "Profile",
+  "type": "object",
+  "properties": {
+    "full_name": {
+      "type": "string",
+      "title": "Nombre"
+    },
+    "bio": {
+      "type": "string",
+      "title": "Biograf\u00eda"
+    },
+    "avatar_url": {
+      "type": "string",
+      "format": "uri",
+      "title": "Foto"
+    },
+    "neighborhood": {
+      "type": "string",
+      "title": "Barrio"
+    },
+    "areas_interest": {
+      "type": "array",
+      "title": "\u00c1reas de inter\u00e9s",
+      "items": {
+        "type": "string",
+        "enum": [
+          "subsistencia",
+          "vivienda",
+          "trabajo",
+          "cuidados",
+          "educacion",
+          "salud",
+          "ocio",
+          "comunidad"
+        ]
+      },
+      "default": []
+    },
+    "skills": {
+      "type": "string",
+      "title": "Qu\u00e9 s\u00e9 hacer"
+    },
+    "what_i_offer": {
+      "type": "string",
+      "title": "Qu\u00e9 puedo aportar"
+    },
+    "what_i_seek": {
+      "type": "string",
+      "title": "Qu\u00e9 busco"
+    }
+  },
+  "required": [
+    "full_name"
+  ]
+}

@@ -1,0 +1,83 @@
+[
+  {
+    "id": "tpl-1",
+    "name": "Huerto urbano",
+    "area": "subsistencia",
+    "description": "Cultivo compartido en solar, terraza o patio vecinal.",
+    "what_needed": "Espacio, herramientas, turnos de riego, semillas",
+    "contribution_type": "tiempo",
+    "created_date": "2026-06-01T10:00:00.000Z"
+  },
+  {
+    "id": "tpl-2",
+    "name": "Cocina comunitaria",
+    "area": "subsistencia",
+    "description": "Aprovechar excedentes y cocinar juntos a precio justo.",
+    "what_needed": "Cocina, logística, voluntariado",
+    "contribution_type": "espacio",
+    "created_date": "2026-06-02T10:00:00.000Z"
+  },
+  {
+    "id": "tpl-3",
+    "name": "Vivienda cooperativa",
+    "area": "vivienda",
+    "description": "Grupo que rehabilita y habita en régimen no especulativo.",
+    "what_needed": "Capital semilla, estatutos, oficios",
+    "contribution_type": "dinero",
+    "created_date": "2026-06-03T10:00:00.000Z"
+  },
+  {
+    "id": "tpl-4",
+    "name": "Red de cuidados",
+    "area": "cuidados",
+    "description": "Turnos vecinos para acompañar a quien lo necesita.",
+    "what_needed": "Personas, formación, espacio de reunión",
+    "contribution_type": "tiempo",
+    "created_date": "2026-06-04T10:00:00.000Z"
+  },
+  {
+    "id": "tpl-5",
+    "name": "Escuela popular",
+    "area": "educacion",
+    "description": "Apoyo escolar y talleres fuera del mercado educativo.",
+    "what_needed": "Aula, educadoras, material",
+    "contribution_type": "tiempo",
+    "created_date": "2026-06-05T10:00:00.000Z"
+  },
+  {
+    "id": "tpl-6",
+    "name": "Taller comunitario",
+    "area": "salud",
+    "description": "Reparación de bicis, herramientas y movilidad activa.",
+    "what_needed": "Local, herramientas, gente con oficio",
+    "contribution_type": "conocimiento",
+    "created_date": "2026-06-06T10:00:00.000Z"
+  },
+  {
+    "id": "tpl-7",
+    "name": "Club de lectura barrial",
+    "area": "ocio",
+    "description": "Encuentros mensuales de lectura y debate.",
+    "what_needed": "Local o terraza, libros, dinamización",
+    "contribution_type": "tiempo",
+    "created_date": "2026-06-07T10:00:00.000Z"
+  },
+  {
+    "id": "tpl-8",
+    "name": "Asamblea de barrio",
+    "area": "comunidad",
+    "description": "Espacio fijo para decidir asuntos comunes del vecindario.",
+    "what_needed": "Lugar, difusión, facilitación",
+    "contribution_type": "tiempo",
+    "created_date": "2026-06-08T10:00:00.000Z"
+  },
+  {
+    "id": "tpl-9",
+    "name": "Coworking mutualista",
+    "area": "trabajo",
+    "description": "Espacio de trabajo compartido con costes rotativos.",
+    "what_needed": "Local, wifi, acuerdos de uso",
+    "contribution_type": "dinero",
+    "created_date": "2026-06-09T10:00:00.000Z"
+  }
+]

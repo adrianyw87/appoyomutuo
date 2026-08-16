@@ -1,0 +1,48 @@
+{
+  "name": "Template",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "title": "Nombre"
+    },
+    "area": {
+      "type": "string",
+      "title": "\u00c1rea",
+      "enum": [
+        "subsistencia",
+        "vivienda",
+        "trabajo",
+        "cuidados",
+        "educacion",
+        "salud",
+        "ocio",
+        "comunidad"
+      ]
+    },
+    "description": {
+      "type": "string",
+      "title": "Descripci\u00f3n"
+    },
+    "what_needed": {
+      "type": "string",
+      "title": "Qu\u00e9 hace falta"
+    },
+    "contribution_type": {
+      "type": "string",
+      "title": "Tipo de aporte principal",
+      "enum": [
+        "dinero",
+        "tiempo",
+        "espacio",
+        "conocimiento"
+      ],
+      "default": "tiempo"
+    }
+  },
+  "required": [
+    "name",
+    "area",
+    "description"
+  ]
+}

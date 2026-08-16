@@ -1,0 +1,29 @@
+{
+  "name": "Task",
+  "type": "object",
+  "properties": {
+    "project_id": {
+      "type": "string",
+      "title": "Proyecto"
+    },
+    "title": {
+      "type": "string",
+      "title": "Tarea"
+    },
+    "status": {
+      "type": "string",
+      "title": "Estado",
+      "enum": [
+        "todo",
+        "doing",
+        "done"
+      ],
+      "default": "todo"
+    }
+  },
+  "required": [
+    "project_id",
+    "title",
+    "status"
+  ]
+}
