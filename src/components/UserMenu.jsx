@@ -11,7 +11,8 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
-import { User as UserIcon, LogOut } from "lucide-react";
+import { User as UserIcon, LogOut, Shield } from "lucide-react";
+import { isAdminUser } from "@/lib/moderation";
 
 export default function UserMenu() {
   const { user, isAuthenticated, logout } = useAuth();
@@ -52,6 +53,12 @@ export default function UserMenu() {
           <UserIcon className="w-4 h-4 mr-2" />
           Mi perfil
         </DropdownMenuItem>
+        {isAdminUser(user) && (
+          <DropdownMenuItem onClick={() => navigate("/admin")} className="cursor-pointer">
+            <Shield className="w-4 h-4 mr-2" />
+            Administración
+          </DropdownMenuItem>
+        )}
         <DropdownMenuItem onClick={() => logout()} className="cursor-pointer text-destructive focus:text-destructive">
           <LogOut className="w-4 h-4 mr-2" />
           Cerrar sesión

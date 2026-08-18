@@ -8,6 +8,7 @@ import {
   saveCollection,
   startMockSession,
 } from "./store";
+import { isAdminUser, isPublicProject, MODERATION } from "@/lib/moderation";
 
 const delay = (ms = 80) => new Promise((r) => setTimeout(r, ms));
 
@@ -36,6 +37,17 @@ function sortItems(items, sort) {
     if (av > bv) return desc ? -1 : 1;
     return desc ? 1 : -1;
   });
+}
+
+function canSeeProject(item, actor) {
+  if (isPublicProject(item)) return true;
+  if (isAdminUser(actor)) return true;
+  return !!(actor && item.created_by_id === actor.id);
+}
+
+function visibleProjects(items) {
+  const actor = currentActor();
+  return items.filter((item) => canSeeProject(item, actor));
 }
 
 function createEntityApi(name) {
@@ -159,9 +171,33 @@ export function createMockClient() {
     console.info("[mock] Base44 local mock activo — datos en src/api/mock/data/");
   }
 
+  const projectApi = createEntityApi("Project");
+  const Project = {
+    ...projectApi,
+    async list(sort, limit) {
+      const items = visibleProjects(await projectApi.list(sort));
+      return limit ? items.slice(0, limit) : items;
+    },
+    async filter(query = {}, sort, limit) {
+      const items = visibleProjects(await projectApi.filter(query, sort));
+      return limit ? items.slice(0, limit) : items;
+    },
+    async get(id) {
+      const item = await projectApi.get(id);
+      if (!canSeeProject(item, currentActor())) {
+        throw new MockError("Project not found", 404);
+      }
+      return item;
+    },
+    async create(data) {
+      const moderation_status = MODERATION.PENDING;
+      return projectApi.create({ ...data, moderation_status });
+    },
+  };
+
   return {
     entities: {
-      Project: createEntityApi("Project"),
+      Project,
       Profile: createEntityApi("Profile"),
       Membership: createEntityApi("Membership"),
       Template: createEntityApi("Template"),
@@ -176,7 +212,8 @@ export function createMockClient() {
         if (!hasMockSession()) {
           throw new MockError("Not authenticated", 401);
         }
-        return getMockUser();
+        const user = getMockUser();
+        return { ...user, is_admin: isAdminUser(user) };
       },
       isAuthenticated() {
         return hasMockSession();
@@ -225,6 +262,23 @@ export function createMockClient() {
           const url = file ? URL.createObjectURL(file) : "";
           return { file_url: url };
         },
+      },
+    },
+    admin: {
+      async listUsers() {
+        await delay();
+        if (!isAdminUser(currentActor())) {
+          throw new MockError("not allowed", 403);
+        }
+        return getCollection("Profile").map((p) => ({
+          id: p.created_by_id || p.id,
+          email: p.created_by || "",
+          full_name: p.full_name || "",
+          neighborhood: p.neighborhood || "",
+          created_at: p.created_date,
+          last_sign_in_at: null,
+          is_admin: isAdminUser({ email: p.created_by }),
+        }));
       },
     },
     functions: {

@@ -8,6 +8,7 @@ import PuzzleHero from "@/components/PuzzleHero";
 import HowItWorks from "@/components/HowItWorks";
 import Reveal from "@/components/Reveal";
 import ProjectSection from "@/components/ProjectSection";
+import { isPublicProject } from "@/lib/moderation";
 
 export default function Home() {
   const [projects, setProjects] = useState([]);
@@ -15,7 +16,7 @@ export default function Home() {
 
   useEffect(() => {
     base44.entities.Project.list("-created_date", 30)
-      .then((data) => setProjects(data))
+      .then((data) => setProjects(data.filter(isPublicProject)))
       .finally(() => setLoading(false));
   }, []);
 
@@ -44,7 +45,7 @@ export default function Home() {
             transition={{ duration: 0.7 }}
           >
             <h1 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.05] text-balance mb-6">
-              La mayoría de cosas no existen
+              App social de proyectos colectivos
               <span className="block text-muted-foreground">porque la gente que las quiere</span>
               <span className="block text-accent">no se encuentra.</span>
             </h1>

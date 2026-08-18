@@ -9,6 +9,14 @@ import { Image } from "@/components/ui/image";
 import { AREAS, CONTRIBUTIONS, areaMeta } from "@/lib/appData";
 import { cn } from "@/lib/utils";
 import { resolveProjectCoords } from "@/lib/geocode";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
 /** Dos pasos: identidad + cómo se hace realidad (sin “quién manda”). */
 const STEPS = [
@@ -29,6 +37,7 @@ export default function ProjectCreateForm() {
   const [params] = useSearchParams();
   const [step, setStep] = useState(0);
   const [saving, setSaving] = useState(false);
+  const [reviewOpen, setReviewOpen] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [uploadingPdf, setUploadingPdf] = useState(false);
   const [form, setForm] = useState({
@@ -101,7 +110,7 @@ export default function ProjectCreateForm() {
         { neighborhood: form.neighborhood, address: form.address }
       );
 
-      const created = await base44.entities.Project.create({
+      await base44.entities.Project.create({
         title: form.title,
         description,
         area: form.area,
@@ -121,7 +130,7 @@ export default function ProjectCreateForm() {
         what_happens: form.what_happens,
         template_name: params.get("plantilla") || "",
       });
-      navigate(`/proyectos/${created.id}`);
+      setReviewOpen(true);
     } finally {
       setSaving(false);
     }
@@ -432,6 +441,27 @@ export default function ProjectCreateForm() {
       <p className="text-xs text-muted-foreground text-center mt-6">
         Appoyo Mutuo no admite proyectos que promuevan violencia, discriminación o explotación.
       </p>
+
+      <Dialog open={reviewOpen} onOpenChange={(open) => !open && navigate("/area")}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Tu idea será analizada</DialogTitle>
+            <DialogDescription>
+              Recibirás una respuesta en breve. Hasta entonces no aparece en el radar:
+              así cuidamos que lo publicado encaje con los principios de la plataforma.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <button
+              type="button"
+              onClick={() => navigate("/area")}
+              className="ui-cta inline-flex items-center justify-center bg-primary text-primary-foreground px-5 py-2.5 rounded-md font-medium"
+            >
+              Entendido
+            </button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </>
   );
 }

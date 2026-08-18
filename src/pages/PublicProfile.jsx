@@ -7,6 +7,7 @@ import Layout from "@/components/Layout";
 import UserAvatar from "@/components/UserAvatar";
 import ProjectCard from "@/components/ProjectCard";
 import { areaMeta } from "@/lib/appData";
+import { isPublicProject } from "@/lib/moderation";
 
 export default function PublicProfile() {
   const { userId } = useParams();
@@ -29,7 +30,7 @@ export default function PublicProfile() {
         }
         const createdProjects = await base44.entities.Project.filter({ created_by_id: userId });
         if (cancelled) return;
-        setCreated(createdProjects);
+        setCreated(createdProjects.filter(isPublicProject));
 
         const memberships = await base44.entities.Membership.filter({ created_by_id: userId });
         const ids = memberships.map((m) => m.project_id).filter(Boolean);
@@ -37,7 +38,7 @@ export default function PublicProfile() {
           const joinedProjects = await Promise.all(
             ids.map((pid) => base44.entities.Project.get(pid).catch(() => null))
           );
-          if (!cancelled) setJoined(joinedProjects.filter(Boolean));
+          if (!cancelled) setJoined(joinedProjects.filter((p) => p && isPublicProject(p)));
         }
       } finally {
         if (!cancelled) setLoading(false);

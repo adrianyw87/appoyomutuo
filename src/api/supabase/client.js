@@ -1,4 +1,5 @@
 import { getSupabase } from "./browser";
+import { ADMIN_EMAIL } from "@/lib/moderation";
 
 class AppError extends Error {
   constructor(message, status = 400) {
@@ -59,16 +60,36 @@ function mapQuery(query = {}, { profile = false } = {}) {
 
 function mapUser(user) {
   if (!user) return null;
+  const email = user.email || "";
   return {
     id: user.id,
-    email: user.email,
+    email,
     full_name:
       user.user_metadata?.full_name ||
       user.user_metadata?.name ||
-      user.email?.split("@")[0] ||
+      email.split("@")[0] ||
       "",
     role: "user",
+    is_admin: String(email).toLowerCase() === ADMIN_EMAIL,
   };
+}
+
+async function enrichUser(user) {
+  const mapped = mapUser(user);
+  if (!mapped) return null;
+  try {
+    const sb = getSupabase();
+    const { data } = await sb
+      .from("profiles")
+      .select("is_admin, full_name")
+      .eq("id", user.id)
+      .maybeSingle();
+    if (data?.full_name) mapped.full_name = data.full_name;
+    if (data?.is_admin) mapped.is_admin = true;
+  } catch {
+    /* ignore */
+  }
+  return mapped;
 }
 
 const TABLE = {
@@ -257,7 +278,7 @@ export function createSupabaseAppClient() {
           error,
         } = await sb.auth.getUser();
         if (error || !user) throw new AppError("Not authenticated", 401);
-        return mapUser(user);
+        return enrichUser(user);
       },
       isAuthenticated() {
         // sync hint only; real check is async via me()/session
@@ -273,7 +294,11 @@ export function createSupabaseAppClient() {
         const {
           data: { subscription },
         } = sb.auth.onAuthStateChange((_event, session) => {
-          callback(session ? mapUser(session.user) : null, session);
+          if (!session?.user) {
+            callback(null, session);
+            return;
+          }
+          enrichUser(session.user).then((next) => callback(next, session));
         });
         return () => subscription.unsubscribe();
       },
@@ -376,6 +401,14 @@ export function createSupabaseAppClient() {
           const { data } = sb.storage.from(bucket).getPublicUrl(path);
           return { file_url: data.publicUrl };
         },
+      },
+    },
+    admin: {
+      async listUsers() {
+        const sb = getSupabase();
+        const { data, error } = await sb.rpc("admin_list_users");
+        if (error) throw new AppError(error.message, 400);
+        return data || [];
       },
     },
     functions: {

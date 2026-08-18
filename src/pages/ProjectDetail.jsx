@@ -11,6 +11,7 @@ import PersonHover from "@/components/PersonHover";
 import UserAvatar from "@/components/UserAvatar";
 import ProjectEditDialog from "@/components/ProjectEditDialog";
 import { areaMeta, contributionMeta } from "@/lib/appData";
+import { isAdminUser, isPublicProject, moderationStatus, MODERATION } from "@/lib/moderation";
 
 export default function ProjectDetail() {
   const { id } = useParams();
@@ -111,6 +112,10 @@ export default function ProjectDetail() {
   const progress = needed > 0 ? Math.min(100, Math.round((joined / needed) * 100)) : 0;
   const hasJoined = memberships.some((m) => m.created_by_id === user?.id);
   const isOwner = !!user && project.created_by_id === user.id;
+  const published = isPublicProject(project);
+  const pendingReview = moderationStatus(project) === MODERATION.PENDING;
+  const rejected = moderationStatus(project) === MODERATION.REJECTED;
+  const admin = isAdminUser(user);
 
   return (
     <Layout>
@@ -120,6 +125,29 @@ export default function ProjectDetail() {
         </Link>
 
         <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+          {(pendingReview || rejected) && (
+            <div
+              className={`mb-4 rounded-md px-4 py-3 text-sm ${
+                rejected
+                  ? "bg-rose-50 text-rose-900 border border-rose-200"
+                  : "bg-amber-50 text-amber-900 border border-amber-200"
+              }`}
+            >
+              {rejected
+                ? "Esta idea no se ha publicado en la plataforma."
+                : "Esta idea está en revisión. Todavía no aparece en el radar."}
+              {rejected && project.moderation_note ? (
+                <p className="mt-1 text-xs opacity-80">{project.moderation_note}</p>
+              ) : null}
+              {admin && (
+                <p className="mt-2">
+                  <Link to="/admin" className="font-medium underline">
+                    Ir a administración
+                  </Link>
+                </p>
+              )}
+            </div>
+          )}
           <PuzzleCard accent={area.color} status={project.status} active={project.status === "funcionando"} hover={false}>
             <div className="p-8">
               <div className="flex items-center justify-between gap-2 mb-4 flex-wrap">
@@ -242,6 +270,10 @@ export default function ProjectDetail() {
                 {hasJoined ? (
                   <span className="inline-flex items-center gap-1.5 bg-emerald-600 text-white px-3.5 py-2 rounded-md text-sm font-medium piece-cut whitespace-nowrap shrink-0">
                     <Check className="w-3.5 h-3.5" /> Ya eres pieza
+                  </span>
+                ) : !published ? (
+                  <span className="inline-flex items-center gap-1.5 bg-muted text-muted-foreground px-3.5 py-2 rounded-md text-sm font-medium piece-cut whitespace-nowrap shrink-0">
+                    Aún no se puede sumar
                   </span>
                 ) : remaining === 0 ? (
                   <span className="inline-flex items-center gap-1.5 bg-muted text-muted-foreground px-3.5 py-2 rounded-md text-sm font-medium piece-cut whitespace-nowrap shrink-0">

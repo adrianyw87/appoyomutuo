@@ -7,6 +7,7 @@ import PuzzleCard from "@/components/PuzzleCard";
 import MiniPuzzleCount from "@/components/MiniPuzzle";
 import PersonHover from "@/components/PersonHover";
 import { Image } from "@/components/ui/image";
+import { moderationStatus, MODERATION } from "@/lib/moderation";
 
 export default function WorkspaceProjectCard({ project, index = 0, onOpen, onEdit }) {
   const area = areaMeta(project.area);
@@ -51,8 +52,18 @@ export default function WorkspaceProjectCard({ project, index = 0, onOpen, onEdi
                 />
               </div>
             )}
-            <div className="absolute top-3 left-3">
+            <div className="absolute top-3 left-3 flex flex-col gap-1.5">
               <StatusBadge status={project.status} />
+              {moderationStatus(project) === MODERATION.PENDING && (
+                <span className="inline-flex px-2 py-1 rounded-full bg-amber-100 text-amber-800 text-[0.7rem] font-medium">
+                  En revisión
+                </span>
+              )}
+              {moderationStatus(project) === MODERATION.REJECTED && (
+                <span className="inline-flex px-2 py-1 rounded-full bg-rose-100 text-rose-800 text-[0.7rem] font-medium">
+                  No publicada
+                </span>
+              )}
             </div>
             <span
               className="absolute top-3 right-3 inline-flex items-center gap-1 px-2 py-1 rounded-full bg-card/90 backdrop-blur text-[0.7rem] font-medium"

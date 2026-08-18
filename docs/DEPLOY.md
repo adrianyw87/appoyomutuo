@@ -8,6 +8,7 @@ Tras el schema inicial, ejecuta también (si aún no lo has hecho), en este orde
 
 1. [`supabase/migrations/20260811000000_project_info_pdf.sql`](../supabase/migrations/20260811000000_project_info_pdf.sql) — columna `info_pdf_url` + bucket `project-docs`.
 2. [`supabase/migrations/20260812000000_seed_madrid_projects.sql`](../supabase/migrations/20260812000000_seed_madrid_projects.sql) — **38 proyectos semilla** en Madrid (pack inicial + ampliación).
+3. [`supabase/migrations/20260819000000_admin_moderation.sql`](../supabase/migrations/20260819000000_admin_moderation.sql) — panel admin + aprobación de proyectos.
 
 Puedes regenerar el SQL de semilla desde el JSON mock:
 

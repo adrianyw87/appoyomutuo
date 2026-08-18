@@ -8,6 +8,7 @@ import ProjectCard from "@/components/ProjectCard";
 import MapView from "@/components/MapView";
 import { AREAS } from "@/lib/appData";
 import { cn } from "@/lib/utils";
+import { isPublicProject } from "@/lib/moderation";
 
 export default function Radar() {
   const [projects, setProjects] = useState([]);
@@ -20,7 +21,7 @@ export default function Radar() {
 
   useEffect(() => {
     base44.entities.Project.list("-created_date", 60)
-      .then((data) => setProjects(data))
+      .then((data) => setProjects(data.filter(isPublicProject)))
       .finally(() => setLoading(false));
   }, []);
 
